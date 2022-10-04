@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1036671882103",
+    "project_id": "precisadeajuda-1d3cc",
+    "storage_bucket": "precisadeajuda-1d3cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036671882103:android:8ae8f8b6cc410c67008772",
+        "android_client_info": {
+          "package_name": "com.example.precisa_de_ajuda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036671882103-9e96gbq6il52tdf36sodrc5hp5cu6os0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqNAk_nUnyfpfZUcqSHMmkvd7xkNJ6jio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036671882103-9e96gbq6il52tdf36sodrc5hp5cu6os0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036671882103:android:6aec0dee1df428eb008772",
+        "android_client_info": {
+          "package_name": "com.precisaDeAjuda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036671882103-9e96gbq6il52tdf36sodrc5hp5cu6os0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqNAk_nUnyfpfZUcqSHMmkvd7xkNJ6jio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036671882103-9e96gbq6il52tdf36sodrc5hp5cu6os0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
