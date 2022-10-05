@@ -9,19 +9,19 @@ part of 'auth_page_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthPageController on _AuthPageControllerBase, Store {
-  late final _$userEmailAtom =
-      Atom(name: '_AuthPageControllerBase.userEmail', context: context);
+  late final _$actualUserAtom =
+      Atom(name: '_AuthPageControllerBase.actualUser', context: context);
 
   @override
-  String get userEmail {
-    _$userEmailAtom.reportRead();
-    return super.userEmail;
+  UserModel get actualUser {
+    _$actualUserAtom.reportRead();
+    return super.actualUser;
   }
 
   @override
-  set userEmail(String value) {
-    _$userEmailAtom.reportWrite(value, super.userEmail, () {
-      super.userEmail = value;
+  set actualUser(UserModel value) {
+    _$actualUserAtom.reportWrite(value, super.actualUser, () {
+      super.actualUser = value;
     });
   }
 
@@ -65,6 +65,14 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
     return _$updateUserAsyncAction.run(() => super.updateUser(user));
   }
 
+  late final _$initUserAsyncAction =
+      AsyncAction('_AuthPageControllerBase.initUser', context: context);
+
+  @override
+  Future<UserModel?> initUser() {
+    return _$initUserAsyncAction.run(() => super.initUser());
+  }
+
   late final _$createUserAsyncAction =
       AsyncAction('_AuthPageControllerBase.createUser', context: context);
 
@@ -85,17 +93,6 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
       ActionController(name: '_AuthPageControllerBase', context: context);
 
   @override
-  void setUserEmail(String email) {
-    final _$actionInfo = _$_AuthPageControllerBaseActionController.startAction(
-        name: '_AuthPageControllerBase.setUserEmail');
-    try {
-      return super.setUserEmail(email);
-    } finally {
-      _$_AuthPageControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setUserPassword(String password) {
     final _$actionInfo = _$_AuthPageControllerBaseActionController.startAction(
         name: '_AuthPageControllerBase.setUserPassword');
@@ -107,11 +104,22 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
   }
 
   @override
-  void setUserUuid(String userUuid) {
+  void setUserUuid(String uid) {
     final _$actionInfo = _$_AuthPageControllerBaseActionController.startAction(
         name: '_AuthPageControllerBase.setUserUuid');
     try {
-      return super.setUserUuid(userUuid);
+      return super.setUserUuid(uid);
+    } finally {
+      _$_AuthPageControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setUser(UserModel? usermodel) {
+    final _$actionInfo = _$_AuthPageControllerBaseActionController.startAction(
+        name: '_AuthPageControllerBase.setUser');
+    try {
+      return super.setUser(usermodel);
     } finally {
       _$_AuthPageControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -120,7 +128,7 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
   @override
   String toString() {
     return '''
-userEmail: ${userEmail},
+actualUser: ${actualUser},
 userPassword: ${userPassword},
 userUuid: ${userUuid}
     ''';

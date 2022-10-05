@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:precisa_de_ajuda/Modules/auth/widgets/login_textfield.dart';
 
 import '../controller/auth_page_controller.dart';
-import '../user_model.dart';
+import '../models/user_model.dart';
+import '../utils/validate.dart';
 
 class ContinueRegistration extends StatefulWidget {
   const ContinueRegistration();
@@ -23,17 +26,16 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
   @override
   Widget build(BuildContext context) {
     final controller = Modular.get<AuthPageController>();
-    emailController.text = controller.userEmail;
+    emailController.text = controller.actualUser.userEmail;
     passwordController.text = controller.userPassword;
 
-    // email : RegExp("[a-zA-Z0-9.@_]"))
-
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Completar Registro"),
-        ),
-        body: LayoutBuilder(
-          builder: (context, constraints) => Center(
+      appBar: AppBar(
+        title: const Text("Completar Registro"),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) => Center(
+          child: SingleChildScrollView(
             child: SizedBox(
               width: constraints.maxWidth * 0.7,
               child: Column(
@@ -41,6 +43,10 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   LoginTextField(
+                    formatters: [
+                      FilteringTextInputFormatter.allow(
+                          RegExp("[a-zA-Z0-9.@_]"))
+                    ],
                     controller: emailController,
                     hintText: "EMAIL",
                   ),
@@ -52,7 +58,12 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
                   const SizedBox(
                     height: 10,
                   ),
-                  LoginTextField(controller: cpfController, hintText: "CPF"),
+                  LoginTextField(formatters: [
+                    MaskTextInputFormatter(
+                      mask: '##.###-###',
+                      filter: {'#': RegExp(r'[0-9]')},
+                    )
+                  ], controller: cpfController, hintText: "CPF"),
                   const SizedBox(
                     height: 10,
                   ),
@@ -61,6 +72,12 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
                     height: 10,
                   ),
                   LoginTextField(
+                      formatters: [
+                        MaskTextInputFormatter(
+                          mask: '(##) # ####-####',
+                          filter: {'#': RegExp(r'[0-9]')},
+                        )
+                      ],
                       controller: phoneNumberController,
                       hintText: "PHONE NUMBER"),
                   const SizedBox(
@@ -72,6 +89,27 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () async {
+                        var validationMessage = "";
+
+                        validationMessage = validateAll(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            cpf: cpfController.text,
+                            name: nameController.text,
+                            phoneNumber: phoneNumberController.text);
+
+                        if (validationMessage != "Success") {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                validationMessage,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
                         final message = await controller.updateUser(
                           UserModel(
                             name: nameController.text,
@@ -107,6 +145,8 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

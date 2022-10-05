@@ -1,14 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
+  final List<TextInputFormatter> formatters;
   const LoginTextField({
     Key? key,
     required this.controller,
     required this.hintText,
+    this.formatters = const [],
   }) : super(key: key);
 
   @override
@@ -16,6 +17,7 @@ class LoginTextField extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: TextField(
+        inputFormatters: formatters,
         controller: controller,
         style: const TextStyle(
           color: Colors.black,

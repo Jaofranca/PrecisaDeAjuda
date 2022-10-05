@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:precisa_de_ajuda/Modules/auth/user_model.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:precisa_de_ajuda/Modules/auth/models/user_model.dart';
 import 'package:precisa_de_ajuda/Modules/auth/widgets/login_textfield.dart';
 
 import '../controller/auth_page_controller.dart';
@@ -69,7 +71,9 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                           onPressed: () async {
                             var message = "";
-                            controller.setUserEmail(emailController.text);
+                            controller.setUser(UserModel(
+                              userEmail: emailController.text,
+                            ));
                             controller.setUserPassword(passwordController.text);
                             if (type == true) {
                               message = await controller.logInUser();
