@@ -5,7 +5,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:precisa_de_ajuda/Modules/auth/widgets/login_textfield.dart';
 
 import '../controller/auth_page_controller.dart';
-import '../user_model.dart';
+import '../models/user_model.dart';
 import '../utils/validate.dart';
 
 class ContinueRegistration extends StatefulWidget {

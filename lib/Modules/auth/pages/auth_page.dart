@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:precisa_de_ajuda/Modules/auth/user_model.dart';
+import 'package:precisa_de_ajuda/Modules/auth/models/user_model.dart';
 import 'package:precisa_de_ajuda/Modules/auth/widgets/login_textfield.dart';
 
 import '../controller/auth_page_controller.dart';

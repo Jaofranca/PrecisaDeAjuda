@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
-import 'package:precisa_de_ajuda/Modules/auth/user_model.dart';
+import 'package:precisa_de_ajuda/Modules/auth/models/user_model.dart';
 import 'package:precisa_de_ajuda/Modules/auth/utils/firebase_errors.dart';
 
 part 'auth_page_controller.g.dart';
