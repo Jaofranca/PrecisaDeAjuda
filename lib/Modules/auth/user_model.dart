@@ -6,10 +6,10 @@ class UserModel {
   final String? name;
   final String? ocupation;
   final String? phoneNumber;
-  final String uuid;
+  final String? uuid;
 
   UserModel({
-    required this.uuid,
+    this.uuid,
     required this.userEmail,
     this.completedRegistration,
     this.cpf,
