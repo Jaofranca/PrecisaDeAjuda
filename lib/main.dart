@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color(0xffF72585),
+            background: const Color(0xff7209B7),
+            tertiary: const Color(0xff7209B7)),
       ),
       routeInformationParser: Modular.routeInformationParser,
       routerDelegate: Modular.routerDelegate,

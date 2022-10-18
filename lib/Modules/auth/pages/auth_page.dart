@@ -27,7 +27,8 @@ class _AuthPageState extends State<AuthPage> {
       child: Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) {
-            return SizedBox(
+            return Container(
+              color: const Color(0xff4CC9F0),
               width: constraints.maxWidth,
               height: constraints.maxHeight,
               child: Column(
@@ -44,7 +45,7 @@ class _AuthPageState extends State<AuthPage> {
                     padding: const EdgeInsets.all(20),
                     width: constraints.maxWidth * 0.7,
                     decoration: const BoxDecoration(
-                      color: Colors.blue,
+                      color: Color(0xff4361EE),
                       borderRadius: BorderRadius.all(
                         Radius.circular(25),
                       ),
@@ -53,9 +54,7 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         LoginTextField(
                             controller: emailController, hintText: "EMAIL"),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        const SizedBox(height: 20),
                         LoginTextField(
                             controller: passwordController,
                             hintText: "PASSWORD"),

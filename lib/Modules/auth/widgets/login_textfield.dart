@@ -33,7 +33,7 @@ class LoginTextField extends StatelessWidget {
               style: BorderStyle.none,
             ),
             borderRadius: BorderRadius.all(
-              Radius.circular(25),
+              Radius.circular(12),
             ),
           ),
           hintText: hintText,

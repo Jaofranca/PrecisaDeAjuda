@@ -32,13 +32,14 @@ class _RegisterPageState extends State<RegisterPage> {
         title: const Text("Registre-se"),
       ),
       body: LayoutBuilder(
-        builder: (context, constraints) => Center(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: constraints.maxWidth * 0.7,
+        builder: (context, constraints) => SingleChildScrollView(
+          child: Container(
+            color: const Color(0xff4CC9F0),
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   LoginTextField(
                     formatters: [
@@ -58,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   LoginTextField(formatters: [
                     MaskTextInputFormatter(
-                      mask: '##.###-###',
+                      mask: '###.###.###-##',
                       filter: {'#': RegExp(r'[0-9]')},
                     )
                   ], controller: cpfController, hintText: "CPF"),
