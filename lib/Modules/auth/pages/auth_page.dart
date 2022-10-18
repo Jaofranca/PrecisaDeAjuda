@@ -15,10 +15,11 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+  var message = "";
   bool type = false;
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<AuthPageController>();
+    final controller = Modular.get<AuthController>();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
@@ -70,20 +71,13 @@ class _AuthPageState extends State<AuthPage> {
                             shape: const StadiumBorder(),
                           ),
                           onPressed: () async {
-                            var message = "";
                             controller.setUser(UserModel(
                               userEmail: emailController.text,
                             ));
                             controller.setUserPassword(passwordController.text);
-                            if (type == true) {
-                              message = await controller.logInUser();
-                            } else {
-                              message = await controller.createUser();
-                            }
+                            message = await controller.logInUser();
                             if (message == "success") {
-                              Modular.to.pushNamed(type == true
-                                  ? "/home_page/"
-                                  : "/continue_registration");
+                              Modular.to.pushNamed("/home_page/");
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -96,9 +90,7 @@ class _AuthPageState extends State<AuthPage> {
                             }
                           },
                           child: Text(
-                            type == true
-                                ? "Log in".toUpperCase()
-                                : "cadastre-se".toUpperCase(),
+                            "Log in".toUpperCase(),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -107,15 +99,9 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          setState(() {
-                            type = type == true ? false : true;
-                          });
+                          Modular.to.pushNamed("/register_page");
                         },
-                        child: Text(
-                          type == true
-                              ? "cadastre-se".toUpperCase()
-                              : "Log in".toUpperCase(),
-                        ),
+                        child: Text("cadastre-se".toUpperCase()),
                       )
                     ],
                   )

@@ -6,7 +6,7 @@ import 'package:precisa_de_ajuda/Modules/auth/utils/firebase_errors.dart';
 
 part 'auth_page_controller.g.dart';
 
-class AuthPageController = _AuthPageControllerBase with _$AuthPageController;
+class AuthController = _AuthPageControllerBase with _$AuthPageController;
 
 abstract class _AuthPageControllerBase with Store {
   _AuthPageControllerBase();
@@ -97,12 +97,12 @@ abstract class _AuthPageControllerBase with Store {
       setUserUuid(userCredential.user!.uid);
       // await user!.sendEmailVerification();
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
-        "name": "joao",
+        "name": actualUser.name,
         "email": actualUser.userEmail,
-        "completed_registration": false,
-        "cpf": "00000000000",
-        "is_prestador": false,
-        "phone_number": 123456,
+        "completed_registration": true,
+        "cpf": actualUser.cpf,
+        "is_prestador": actualUser.isPrestador,
+        "phone_number": actualUser.phoneNumber,
         "ocupation": "",
         "photo": " ",
       });

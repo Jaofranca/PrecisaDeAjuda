@@ -8,14 +8,14 @@ import '../controller/auth_page_controller.dart';
 import '../models/user_model.dart';
 import '../utils/validate.dart';
 
-class ContinueRegistration extends StatefulWidget {
-  const ContinueRegistration();
+class RegisterPage extends StatefulWidget {
+  const RegisterPage();
 
   @override
-  State<ContinueRegistration> createState() => _ContinueRegistrationState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _ContinueRegistrationState extends State<ContinueRegistration> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController cpfController = TextEditingController();
@@ -25,13 +25,11 @@ class _ContinueRegistrationState extends State<ContinueRegistration> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<AuthPageController>();
-    emailController.text = controller.actualUser.userEmail;
-    passwordController.text = controller.userPassword;
+    final controller = Modular.get<AuthController>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Completar Registro"),
+        title: const Text("Registre-se"),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) => Center(
