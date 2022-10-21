@@ -13,10 +13,13 @@ class AuthModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute(Modular.initialRoute,
-            child: (context, args) => const AuthPage()),
+        ChildRoute(
+          Modular.initialRoute,
+          child: (context, args) => const AuthPage(),
+        ),
         ChildRoute('/register_page',
-            child: (context, args) => const RegisterPage()),
+            child: (context, args) => const RegisterPage(),
+            transition: TransitionType.leftToRight),
         ModuleRoute('/home_page', module: HomePageModule()),
       ];
 }

@@ -70,9 +70,9 @@ class _AuthPageState extends State<AuthPage> {
                             shape: const StadiumBorder(),
                           ),
                           onPressed: () async {
-                            controller.setUser(UserModel(
-                              userEmail: emailController.text,
-                            ));
+                            controller.setUserEmail(
+                              emailController.text,
+                            );
                             controller.setUserPassword(passwordController.text);
                             message = await controller.logInUser();
                             if (message == "success") {

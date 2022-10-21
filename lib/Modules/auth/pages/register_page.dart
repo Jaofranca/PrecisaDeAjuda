@@ -39,7 +39,9 @@ class _RegisterPageState extends State<RegisterPage> {
             width: constraints.maxWidth,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Column(
+              child: Wrap(
+                runSpacing: 10,
+                alignment: WrapAlignment.center,
                 children: [
                   LoginTextField(
                     formatters: [
@@ -49,27 +51,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: emailController,
                     hintText: "EMAIL",
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(
                       controller: passwordController, hintText: "PASSWORD"),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(formatters: [
                     MaskTextInputFormatter(
                       mask: '###.###.###-##',
                       filter: {'#': RegExp(r'[0-9]')},
                     )
                   ], controller: cpfController, hintText: "CPF"),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(controller: nameController, hintText: "NAME"),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(
                       formatters: [
                         MaskTextInputFormatter(
@@ -79,8 +69,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                       controller: phoneNumberController,
                       hintText: "PHONE NUMBER"),
-                  const SizedBox(
-                    height: 10,
+                  LoginTextField(
+                    controller: ocupationController,
+                    hintText: "OCUPATION",
                   ),
                   SizedBox(
                     child: ElevatedButton(
@@ -108,8 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                           return;
                         }
-
-                        final message = await controller.updateUser(
+                        controller.setUser(
                           UserModel(
                             name: nameController.text,
                             userEmail: emailController.text,
@@ -117,10 +107,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             phoneNumber: phoneNumberController.text,
                             ocupation: ocupationController.text,
                             uuid: controller.userUuid,
+                            isPrestador: ocupationController.text.isNotEmpty
+                                ? true
+                                : false,
                           ),
                         );
+                        controller.setUserPassword(passwordController.text);
+                        final message = await controller.createUser();
                         if (message == "success") {
-                          Modular.to.pushNamed("/home_page/");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Usuário Criado Com sucesso",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                          Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
