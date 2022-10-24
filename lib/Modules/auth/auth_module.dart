@@ -8,7 +8,7 @@ import 'pages/auth_page.dart';
 class AuthModule extends Module {
   @override
   List<Bind> get binds => [
-        Bind((i) => AuthController()),
+        Bind.singleton((i) => AuthPageController()),
       ];
 
   @override
@@ -20,6 +20,7 @@ class AuthModule extends Module {
         ChildRoute('/register_page',
             child: (context, args) => const RegisterPage(),
             transition: TransitionType.leftToRight),
-        ModuleRoute('/home_page', module: HomePageModule()),
+        ModuleRoute('/home_page',
+            module: HomePageModule(), transition: TransitionType.fadeIn),
       ];
 }

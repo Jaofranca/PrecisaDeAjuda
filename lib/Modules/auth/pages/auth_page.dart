@@ -19,7 +19,7 @@ class _AuthPageState extends State<AuthPage> {
   bool type = false;
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<AuthController>();
+    final controller = Modular.get<AuthPageController>();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
@@ -28,7 +28,7 @@ class _AuthPageState extends State<AuthPage> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             return Container(
-              color: const Color(0xff4CC9F0),
+              color: Colors.white,
               width: constraints.maxWidth,
               height: constraints.maxHeight,
               child: Column(
@@ -43,9 +43,8 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   Container(
                     padding: const EdgeInsets.all(20),
-                    width: constraints.maxWidth * 0.7,
+                    width: constraints.maxWidth * 0.9,
                     decoration: const BoxDecoration(
-                      color: Color(0xff4361EE),
                       borderRadius: BorderRadius.all(
                         Radius.circular(25),
                       ),
@@ -53,11 +52,11 @@ class _AuthPageState extends State<AuthPage> {
                     child: Column(
                       children: [
                         LoginTextField(
-                            controller: emailController, hintText: "EMAIL"),
+                            controller: emailController, hintText: "Email"),
                         const SizedBox(height: 20),
                         LoginTextField(
                             controller: passwordController,
-                            hintText: "PASSWORD"),
+                            hintText: "Password"),
                       ],
                     ),
                   ),
@@ -65,6 +64,7 @@ class _AuthPageState extends State<AuthPage> {
                     children: [
                       SizedBox(
                         width: constraints.maxWidth * 0.7,
+                        height: 40,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: const StadiumBorder(),

@@ -22,19 +22,28 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ocupationController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<AuthController>();
+    final controller = Modular.get<AuthPageController>();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Registre-se"),
+        title: Text(
+          "Registre-se".toUpperCase(),
+          style: const TextStyle(
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        foregroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
       ),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
           child: Container(
-            color: const Color(0xff4CC9F0),
             height: constraints.maxHeight,
             width: constraints.maxWidth,
             child: Padding(
@@ -53,12 +62,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   LoginTextField(
                       controller: passwordController, hintText: "PASSWORD"),
-                  LoginTextField(formatters: [
-                    MaskTextInputFormatter(
-                      mask: '###.###.###-##',
-                      filter: {'#': RegExp(r'[0-9]')},
-                    )
-                  ], controller: cpfController, hintText: "CPF"),
+                  LoginTextField(
+                    formatters: [
+                      MaskTextInputFormatter(
+                        mask: '###.###.###-##',
+                        filter: {'#': RegExp(r'[0-9]')},
+                      )
+                    ],
+                    controller: cpfController,
+                    hintText: "CPF",
+                    inputType: TextInputType.number,
+                  ),
                   LoginTextField(controller: nameController, hintText: "NAME"),
                   LoginTextField(
                       formatters: [
@@ -68,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         )
                       ],
                       controller: phoneNumberController,
+                      inputType: TextInputType.number,
                       hintText: "PHONE NUMBER"),
                   LoginTextField(
                     controller: ocupationController,

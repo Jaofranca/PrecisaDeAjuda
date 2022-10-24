@@ -6,7 +6,7 @@ import 'package:precisa_de_ajuda/Modules/auth/utils/firebase_errors.dart';
 
 part 'auth_page_controller.g.dart';
 
-class AuthController = _AuthPageControllerBase with _$AuthPageController;
+class AuthPageController = _AuthPageControllerBase with _$AuthPageController;
 
 abstract class _AuthPageControllerBase with Store {
   _AuthPageControllerBase();
@@ -90,29 +90,25 @@ abstract class _AuthPageControllerBase with Store {
 
   @action
   Future<UserModel?> initUser() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      return null;
+    try {
+      var user = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userUuid)
+          .get();
+      final data = user.data() as Map<String, dynamic>;
+      return UserModel(
+        name: data['name'],
+        userEmail: data['email'],
+        completedRegistration: data['completed_registration'],
+        cpf: data['cpf'],
+        isPrestador: data['is_prestador'],
+        phoneNumber: data['phone_number'],
+        ocupation: data['ocupation'],
+        uuid: userUuid,
+      );
+    } on FirebaseException catch (e) {
+      rethrow;
     }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .get()
-        .then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return UserModel(
-            name: data['name'],
-            userEmail: data['email'],
-            completedRegistration: data['completed_registration'],
-            cpf: data['cpf'],
-            isPrestador: data['is_prestador'],
-            phoneNumber: data['phone_number'],
-            ocupation: data['ocupation'],
-            uuid: user.uid);
-      },
-    );
-    return null;
   }
 
   @action
@@ -158,5 +154,20 @@ abstract class _AuthPageControllerBase with Store {
       returnFirebaseError(e);
       return e.toString();
     }
+  }
+
+  @action
+  Future<bool> deleteUser() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      user.delete().then(
+            (value) => FirebaseFirestore.instance
+                .collection('users')
+                .doc(userUuid)
+                .delete(),
+          );
+      return true;
+    }
+    return false;
   }
 }
