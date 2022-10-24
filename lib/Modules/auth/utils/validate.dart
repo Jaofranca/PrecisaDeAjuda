@@ -22,6 +22,26 @@ String validateAll(
   return "Success";
 }
 
+String validateModifyUserData(
+    {required String email,
+    required String cpf,
+    required String name,
+    required String phoneNumber}) {
+  if (emailValidator(email) != "Success") {
+    return emailValidator(email);
+  }
+  if (cpfValidator(cpf) != "Success") {
+    return cpfValidator(cpf);
+  }
+  if (nameValidator(name) != "Success") {
+    return nameValidator(name);
+  }
+  if (phoneValidator(phoneNumber) != "Success") {
+    return phoneValidator(phoneNumber);
+  }
+  return "Success";
+}
+
 String emailValidator(String? value) {
   if (value == null || value.isEmpty) return "Campo email vazio";
   final bool emailValid = RegExp(

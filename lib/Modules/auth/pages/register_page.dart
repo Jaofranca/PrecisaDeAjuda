@@ -22,23 +22,35 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ocupationController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<AuthController>();
+    final controller = Modular.get<AuthPageController>();
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Registre-se"),
+        title: Text(
+          "Registre-se".toUpperCase(),
+          style: const TextStyle(
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        foregroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
       ),
       body: LayoutBuilder(
-        builder: (context, constraints) => Center(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              width: constraints.maxWidth * 0.7,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+        builder: (context, constraints) => SingleChildScrollView(
+          child: Container(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Wrap(
+                runSpacing: 10,
+                alignment: WrapAlignment.center,
                 children: [
                   LoginTextField(
                     formatters: [
@@ -48,27 +60,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: emailController,
                     hintText: "EMAIL",
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(
                       controller: passwordController, hintText: "PASSWORD"),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  LoginTextField(formatters: [
-                    MaskTextInputFormatter(
-                      mask: '##.###-###',
-                      filter: {'#': RegExp(r'[0-9]')},
-                    )
-                  ], controller: cpfController, hintText: "CPF"),
-                  const SizedBox(
-                    height: 10,
+                  LoginTextField(
+                    formatters: [
+                      MaskTextInputFormatter(
+                        mask: '###.###.###-##',
+                        filter: {'#': RegExp(r'[0-9]')},
+                      )
+                    ],
+                    controller: cpfController,
+                    hintText: "CPF",
+                    inputType: TextInputType.number,
                   ),
                   LoginTextField(controller: nameController, hintText: "NAME"),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   LoginTextField(
                       formatters: [
                         MaskTextInputFormatter(
@@ -77,9 +82,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         )
                       ],
                       controller: phoneNumberController,
+                      inputType: TextInputType.number,
                       hintText: "PHONE NUMBER"),
-                  const SizedBox(
-                    height: 10,
+                  LoginTextField(
+                    controller: ocupationController,
+                    hintText: "OCUPATION",
                   ),
                   SizedBox(
                     child: ElevatedButton(
@@ -107,8 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                           return;
                         }
-
-                        final message = await controller.updateUser(
+                        controller.setUser(
                           UserModel(
                             name: nameController.text,
                             userEmail: emailController.text,
@@ -116,10 +122,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             phoneNumber: phoneNumberController.text,
                             ocupation: ocupationController.text,
                             uuid: controller.userUuid,
+                            isPrestador: ocupationController.text.isNotEmpty
+                                ? true
+                                : false,
                           ),
                         );
+                        controller.setUserPassword(passwordController.text);
+                        final message = await controller.createUser();
                         if (message == "success") {
-                          Modular.to.pushNamed("/home_page/");
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                "Usuário Criado Com sucesso",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                          Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

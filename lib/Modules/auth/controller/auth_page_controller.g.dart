@@ -41,6 +41,22 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
     });
   }
 
+  late final _$userEmailAtom =
+      Atom(name: '_AuthPageControllerBase.userEmail', context: context);
+
+  @override
+  String get userEmail {
+    _$userEmailAtom.reportRead();
+    return super.userEmail;
+  }
+
+  @override
+  set userEmail(String value) {
+    _$userEmailAtom.reportWrite(value, super.userEmail, () {
+      super.userEmail = value;
+    });
+  }
+
   late final _$userUuidAtom =
       Atom(name: '_AuthPageControllerBase.userUuid', context: context);
 
@@ -54,6 +70,22 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
   set userUuid(String value) {
     _$userUuidAtom.reportWrite(value, super.userUuid, () {
       super.userUuid = value;
+    });
+  }
+
+  late final _$prestadoresAtom =
+      Atom(name: '_AuthPageControllerBase.prestadores', context: context);
+
+  @override
+  List<UserModel> get prestadores {
+    _$prestadoresAtom.reportRead();
+    return super.prestadores;
+  }
+
+  @override
+  set prestadores(List<UserModel> value) {
+    _$prestadoresAtom.reportWrite(value, super.prestadores, () {
+      super.prestadores = value;
     });
   }
 
@@ -126,11 +158,24 @@ mixin _$AuthPageController on _AuthPageControllerBase, Store {
   }
 
   @override
+  void setPrestadores(List<UserModel> listPrestadores) {
+    final _$actionInfo = _$_AuthPageControllerBaseActionController.startAction(
+        name: '_AuthPageControllerBase.setPrestadores');
+    try {
+      return super.setPrestadores(listPrestadores);
+    } finally {
+      _$_AuthPageControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 actualUser: ${actualUser},
 userPassword: ${userPassword},
-userUuid: ${userUuid}
+userEmail: ${userEmail},
+userUuid: ${userUuid},
+prestadores: ${prestadores}
     ''';
   }
 }
